@@ -1,0 +1,15 @@
+﻿Build started 9/11/2015 12:59:38 AM.
+     1>Project "C:\Irvine\Examples\Project64\Project64.vcxproj" on node 2 (Build target(s)).
+     1>_MASM:
+         Assembling ..\ch03\AddTwoSum_64.asm...
+         cmd.exe /C "C:\Users\Ken\AppData\Local\Temp\tmp1b6d8b44b574420fb9e3cfb1fc547706.cmd"
+         ml64.exe /c /nologo /Zi /Fo"x64\x64\AddTwoSum_64.obj" /W3 /errorReport:prompt  /Ta..\ch03\AddTwoSum_64.asm
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Irvine\Examples\Project64\x64\x64\Project64.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Irvine\Examples\Project64\x64\x64\Project64.pdb" /SUBSYSTEM:CONSOLE /LARGEADDRESSAWARE:NO /TLBID:1 /ENTRY:"main" /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Irvine\Examples\Project64\x64\x64\Project64.lib" /MACHINE:X64 Irvine64.obj
+         x64\x64\AddTwoSum_64.obj
+         Project64.vcxproj -> C:\Irvine\Examples\Project64\x64\x64\Project64.exe
+     1>Done Building Project "C:\Irvine\Examples\Project64\Project64.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.39

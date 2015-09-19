@@ -1,0 +1,16 @@
+﻿Build started 8/30/2015 10:15:00 PM.
+     1>Project "C:\Irvine\Examples\Project64\Project64.vcxproj" on node 2 (Rebuild target(s)).
+     1>_MASM:
+         Assembling ..\ch03\AddTwoSum_64.asm...
+         cmd.exe /C "C:\Users\Ken\AppData\Local\Temp\tmp3146d9ab73a742b786b710a6ab174308.cmd"
+         ml64.exe /c /nologo /Zi /Fo"x64\Debug\AddTwoSum_64.obj" /W3 /errorReport:prompt  /Ta..\ch03\AddTwoSum_64.asm
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Irvine\Examples\Project64\x64\Debug\Project64.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Irvine\Examples\Project64\x64\Debug\Project64.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Irvine\Examples\Project64\x64\Debug\Project64.lib" /MACHINE:X64 Irvine64.obj
+         x64\Debug\AddTwoSum_64.obj
+     1>LINK : error LNK2001: unresolved external symbol mainCRTStartup
+     1>C:\Irvine\Examples\Project64\x64\Debug\Project64.exe : fatal error LNK1120: 1 unresolved externals
+     1>Done Building Project "C:\Irvine\Examples\Project64\Project64.vcxproj" (Rebuild target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.24

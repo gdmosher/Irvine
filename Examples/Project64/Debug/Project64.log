@@ -1,0 +1,16 @@
+﻿Build started 8/30/2015 9:55:18 PM.
+     1>Project "C:\Irvine\Examples\Project64\Project64.vcxproj" on node 2 (Build target(s)).
+     1>_MASM:
+         Assembling ..\ch03\AddTwoSum_64.asm...
+         cmd.exe /C "C:\Users\Ken\AppData\Local\Temp\tmpf99d3fa408f04e7b99aab0980e8a95e9.cmd"
+         ml.exe /c /nologo /Zi /Fo"Debug\AddTwoSum_64.obj" /W3 /errorReport:prompt  /Ta..\ch03\AddTwoSum_64.asm
+     1>..\ch03\AddTwoSum_64.asm(18): error A2071: initializer magnitude too large for specified size
+     1>..\ch03\AddTwoSum_64.asm(18): error A2006: undefined symbol : ra..\ch03\AddTwoSum_64.asm(19) : error A2071:initializer magnitude too large for specified size
+     1>..\ch03\AddTwoSum_64.asm(19): error A2006: undefined symbol : ra..\ch03\AddTwoSum_64.asm(20) : error A2071:initializer magnitude too large for specified size
+     1>..\ch03\AddTwoSum_64.asm(20): error A2006: undefined symbol : ra
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\BuildCustomizations\masm.targets(50,5): error MSB3721: The command "ml.exe /c /nologo /Zi /Fo"Debug\AddTwoSum_64.obj" /W3 /errorReport:prompt  /Ta..\ch03\AddTwoSum_64.asm" exited with code 1.
+     1>Done Building Project "C:\Irvine\Examples\Project64\Project64.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.13

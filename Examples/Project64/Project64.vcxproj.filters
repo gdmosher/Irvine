@@ -3,4 +3,7 @@
   <ItemGroup>
     <Object Include="Irvine64.obj" />
   </ItemGroup>
+  <ItemGroup>
+    <MASM Include="..\ch03\AddTwoSum_64.asm" />
+  </ItemGroup>
 </Project>
