@@ -50,8 +50,6 @@
       <WarningLevel>3</WarningLevel>
       <NoLogo>true</NoLogo>
       <EnableAssemblyGeneratedCodeListing>true</EnableAssemblyGeneratedCodeListing>
-      <GeneratePreprocessedSourceListing>true</GeneratePreprocessedSourceListing>
-      <ListAllAvailableInformation>true</ListAllAvailableInformation>
     </MASM>
     <Link>
       <AdditionalDependencies>user32.lib;irvine32.lib;%(AdditionalDependencies)</AdditionalDependencies>
