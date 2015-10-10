@@ -4,8 +4,14 @@ ExitProcess proto
 
 COMMENT ~
 ;OUTPUT MODEL ISSUE NOT 64BIT (remember to set config)
+;	https://www.youtube.com/watch?v=QWWTrdNkhBI
+;	project buildCustomization MASM
+;	solutionPlatform new x64 copyFromWin32 createPlatformFiles
+;	property linker advanced entrypoint main
 ;INCLUDE irvine64.inc (does not exist)
-~
+;NO .486
+;NO .MODEL
+~				;~ end comment
 .data
 sum qword 0
 
