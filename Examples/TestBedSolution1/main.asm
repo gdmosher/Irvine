@@ -24,10 +24,12 @@ Uu ctrlR
 TITLE Add and Subtract
 ; This program adds and subtracts 32 - bit integers.
 INCLUDE Irvine32.inc
+InClass1105 PROTO
 Add3Integers PROTO
 Multiply PROTO
 AddSub PROTO
 ArraySum PROTO
+CStringCopy PROTO
 pressKey EQU  <"Press any key ...", 0dh, 0ah, 0>
 
 .data ;GLOBALS
@@ -42,10 +44,13 @@ main	PROC
 
 mov edx, offset global; use this line just to find Data Seg in EDX
 
+Call InClass1105
 Call Add3Integers
 Call Multiply
 Call AddSub
 Call ArraySum
+Call CStringCopy
+
 .data
 var1	DWORD	50000h
 var2	WORD	65535

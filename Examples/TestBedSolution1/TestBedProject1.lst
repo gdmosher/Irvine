@@ -1,9 +1,9 @@
-Microsoft (R) Macro Assembler Version 12.00.31101.0	    10/27/15 23:39:33
-Multipl						     Page 1 - 1
+Microsoft (R) Macro Assembler Version 12.00.31101.0	    10/28/15 18:08:01
+CStringCop						     Page 1 - 1
 
 
-				TITLE Multiply 
-				; This routine multiplies 2 32 - bit integers.
+				TITLE CStringCopy 
+				; This routine Copies a Cstring
 				INCLUDE Irvine32.inc
 			      C ; Include file for Irvine32.lib             (Irvine32.inc)
 			      C 
@@ -35,68 +35,64 @@ Microsoft (R) Macro Assembler Version 12.00.31101.0	    10/27/15 23:39:33
 	   32
 
  00000020			.data
-
-
- 00000020 00000000		n1 DWORD ?
- 00000024 00000000		n2 DWORD ?
- 00000028 54 68 65 20 74	m1 BYTE "The total equals ", 0
-	   6F 74 61 6C 20
-	   65 71 75 61 6C
-	   73 20 00
- 0000003A 45 6E 74 65 72	m2 BYTE "Enter a number: ", 0
-	   20 61 20 6E 75
-	   6D 62 65 72 3A
-	   20 00
- 0000004B 20 00			m3 BYTE " ", 0
- 0000004D 20 3D 20 00		msg_equals BYTE " = ", 0
- 00000051 20 2A 20 00		msg_multiply BYTE " * ", 0
- 00000055 00000000		result DWORD ?
+ 00000020 54 68 69 73 20	source	BYTE	"This is the source string.", 0ah, 0dh, 0
+	   69 73 20 74 68
+	   65 20 73 6F 75
+	   72 63 65 20 73
+	   74 72 69 6E 67
+	   2E 0A 0D 00
+ 0000003D  0000001D [		target	BYTE	SIZEOF source DUP(0)
+	    00
+	   ]
+ 0000005A  0000001D [		dest2	BYTE	SIZEOF source DUP(0)
+	    00
+	   ]
 
  00000000			.code
- 00000000			Multiply PROC
- 00000000  BA 0000003A R	mov edx, offset m2
+ 00000000			CStringCopy PROC
+
+ 00000000  BA 00000020 R	mov edx, offset source
  00000005  E8 00000000 E	call WriteString
- 0000000A  E8 00000000 E	call ReadDec;not ReadInt
- 0000000F  A3 00000020 R	mov n1, eax
 
- 00000014  BA 0000003A R	mov edx, offset m2
- 00000019  E8 00000000 E	call WriteString
- 0000001E  E8 00000000 E	call ReadDec
- 00000023  A3 00000024 R	mov n2, eax
+ 0000000A  BE 00000000		mov esi, 0					;index register
+ 0000000F  B9 0000001D		mov ecx, SIZEOF source		;initialize loop counter
+ 00000014			L1:
+ 00000014  8A 86 00000020 R	mov al, source[esi]			;get a character from source
+ 0000001A  88 86 0000003D R	mov target[esi],al			;store it in the target
+ 00000020  46			inc esi						;move to the next character
+ 00000021  E2 F1		loop L1
 
- 00000028  0F AF 05		imul eax, n1
-	   00000020 R
- 0000002F  A3 00000055 R	mov result, eax
+ 00000023			.code
+ 00000023  BA 0000003D R	mov edx, offset target
+ 00000028  E8 00000000 E	call WriteString
+ 0000002D  8C D8		 mov eax, ds;@data ; Load same segment
+ 0000002F  8E D8		 mov ds, eax ; to both DS
+ 00000031  8E C0		 mov es, eax ; and ES
+				 
+ 00000033  FC			    cld                  ; set direction flag forward
+ 00000034  8D 35 00000020 R	    lea esi, source      ; put address into the source index
+ 0000003A  8D 3D 0000005A R	    lea edi, dest2       ; put address into the destination index
+ 00000040  B9 0000001D		    mov ecx, SIZEOF source          ; put the number of bytes to copy in ecx
+				  ; --------------------------------------------------
+				  ; repeat copying bytes from ESI to EDI until ecx = 0
+				  ; --------------------------------------------------
+ 00000045  F3/ A4		    rep movsb 
+ 00000047  BA 0000005A R	mov edx, offset dest2
+ 0000004C  E8 00000000 E	call WriteString
 
+ 00000051  E8 00000000 E	call crlf
+ 00000056  E8 00000000 E	call crlf
+ 0000005B  E8 00000000 E		call DumpRegs	;display registers
+ 00000060  BA 00000000 R		mov	 edx, offset prompt
+ 00000065  E8 00000000 E		call  WriteString; displays “Press any key ...
+ 0000006A  E8 00000000 E	call ReadDec;not ReadInt
 
- 00000034  A1 00000020 R	mov eax, n1
- 00000039  E8 00000000 E	call writeDec
-
- 0000003E  BA 00000051 R	mov edx, offset msg_multiply
- 00000043  E8 00000000 E	call WriteString
-
- 00000048  A1 00000024 R	mov eax, n2
- 0000004D  E8 00000000 E	call writeDec
-
- 00000052  BA 0000004D R	mov edx, offset msg_equals
- 00000057  E8 00000000 E	call WriteString
-
- 0000005C  A1 00000055 R	mov eax, result
- 00000061  E8 00000000 E	call writeDec
-
- 00000066  E8 00000000 E	call crlf
- 0000006B  E8 00000000 E	call crlf
- 00000070  E8 00000000 E		call DumpRegs	;display registers
- 00000075  BA 00000000 R		mov	 edx, offset prompt
- 0000007A  E8 00000000 E		call  WriteString; displays “Press any key ...
- 0000007F  E8 00000000 E	call ReadDec;not ReadInt
-
- 00000084  C3			ret
- 00000085			Multiply ENDP
+ 0000006F  C3			ret
+ 00000070			CStringCopy ENDP
 				END
-				;end Multiply 
-Microsoft (R) Macro Assembler Version 12.00.31101.0	    10/27/15 23:39:33
-Multipl						     Symbols 2 - 1
+				;end CStringCopy 
+Microsoft (R) Macro Assembler Version 12.00.31101.0	    10/28/15 18:08:01
+CStringCop						     Symbols 2 - 1
 
 
 
@@ -189,14 +185,16 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 00000059 Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 00000085 Para	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000077 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000070 Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
 
                 N a m e                 Type     Value    Attr
 
+CStringCopy  . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000070 Public STDCALL
+  L1 . . . . . . . . . . . . . .	L Near	 00000014 _TEXT	
 CloseFile  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 CloseHandle  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 Clrscr . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -241,7 +239,6 @@ LocalFree  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 MessageBoxA  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 MsgBoxAsk  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 MsgBox . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-Multiply . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000085 Public STDCALL
 OpenInputFile  . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 ParseDecimal32 . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 ParseInteger32 . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -520,6 +517,7 @@ black  . . . . . . . . . . . . .	Number	 00000000h
 blue . . . . . . . . . . . . . .	Number	 00000001h   
 brown  . . . . . . . . . . . . .	Number	 00000006h   
 cyan . . . . . . . . . . . . . .	Number	 00000003h   
+dest2  . . . . . . . . . . . . .	Byte	 0000005A _DATA	
 exit . . . . . . . . . . . . . .	Text   	 INVOKE ExitProcess,0
 global . . . . . . . . . . . . .	Byte	 00000010 _DATA	
 gray . . . . . . . . . . . . . .	Number	 00000008h   
@@ -530,18 +528,12 @@ lightGray  . . . . . . . . . . .	Number	 00000007h
 lightGreen . . . . . . . . . . .	Number	 0000000Ah   
 lightMagenta . . . . . . . . . .	Number	 0000000Dh   
 lightRed . . . . . . . . . . . .	Number	 0000000Ch   
-m1 . . . . . . . . . . . . . . .	Byte	 00000028 _DATA	
-m2 . . . . . . . . . . . . . . .	Byte	 0000003A _DATA	
-m3 . . . . . . . . . . . . . . .	Byte	 0000004B _DATA	
 magenta  . . . . . . . . . . . .	Number	 00000005h   
-msg_equals . . . . . . . . . . .	Byte	 0000004D _DATA	
-msg_multiply . . . . . . . . . .	Byte	 00000051 _DATA	
-n1 . . . . . . . . . . . . . . .	DWord	 00000020 _DATA	
-n2 . . . . . . . . . . . . . . .	DWord	 00000024 _DATA	
 pressKey . . . . . . . . . . . .	Text   	 "Press <Enter>  ", 0
 prompt . . . . . . . . . . . . .	Byte	 00000000 _DATA	
 red  . . . . . . . . . . . . . .	Number	 00000004h   
-result . . . . . . . . . . . . .	DWord	 00000055 _DATA	
+source . . . . . . . . . . . . .	Byte	 00000020 _DATA	
+target . . . . . . . . . . . . .	Byte	 0000003D _DATA	
 white  . . . . . . . . . . . . .	Number	 0000000Fh   
 wsprintf . . . . . . . . . . . .	Text   	 wsprintfA
 yellow . . . . . . . . . . . . .	Number	 0000000Eh   

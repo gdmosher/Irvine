@@ -14,6 +14,7 @@
     <MASM Include="Add3Integers.asm" />
     <MASM Include="AddSub.asm" />
     <MASM Include="ArraySum.asm" />
+    <MASM Include="CStringCopy.asm" />
     <MASM Include="main.asm" />
     <MASM Include="Multiply.asm" />
   </ItemGroup>
