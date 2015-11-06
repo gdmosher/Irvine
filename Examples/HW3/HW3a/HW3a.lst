@@ -1,9 +1,17 @@
-Microsoft (R) Macro Assembler Version 12.00.31101.0	    11/05/15 23:18:12
-Multipl						     Page 1 - 1
+Microsoft (R) Macro Assembler Version 12.00.31101.0	    11/06/15 10:43:23
+MASM Template						(main.asm  Page 1 - 1
 
 
-				TITLE Multiply 
-				; This routine multiplies 2 32 - bit integers.
+				TITLE MASM Template						(main.asm)
+				;=================================================
+				; ATTACHED: HW3abc
+				;=================================================
+				; Program Description:	HW3a
+				; Author:				GORDON MOSHER
+				; Date Created:			2015-1106
+				; Last Modification:	2015-1106
+				;=================================================
+
 				INCLUDE Irvine32.inc
 			      C ; Include file for Irvine32.lib             (Irvine32.inc)
 			      C 
@@ -22,81 +30,55 @@ Microsoft (R) Macro Assembler Version 12.00.31101.0	    11/05/15 23:18:12
 			      C .NOLIST
 			      C .LIST
 			      C 
- = "Press <Enter>  ", 0		pressKey EQU  <"Press <Enter>  ", 0>
 
- 00000000			.data ;GLOBALS
- 00000000 50 72 65 73 73	prompt  BYTE  pressKey
-	   20 3C 45 6E 74
-	   65 72 3E 20 20
-	   00
- 00000010 32 32 32 32 32	global  BYTE "22222ABCDEF22222"
-	   41 42 43 44 45
-	   46 32 32 32 32
-	   32
+ = 00000001			FIRST_QTR EQU 1
+ = 00000002			SECOND_QTR EQU 2
+ = 00000003			THIRD_QTR EQU 3
+ = 00000004			FOURTH_QTR EQU 4
 
- 00000020			.data
+ 00000000			.data
+ 00000000 4D 41 53 4D 20	myMessage BYTE "MASM program example",0dh,0ah,0
+	   70 72 6F 67 72
+	   61 6D 20 65 78
+	   61 6D 70 6C 65
+	   0D 0A 00
+ 00000017 00000001		quarters DWORD FIRST_QTR, SECOND_QTR, THIRD_QTR, FOURTH_QTR
+	   00000002
+	   00000003
+	   00000004
 
-
- 00000020 00000000		n1 DWORD ?
- 00000024 00000000		n2 DWORD ?
- 00000028 54 68 65 20 74	m1 BYTE "The total equals ", 0
-	   6F 74 61 6C 20
-	   65 71 75 61 6C
-	   73 20 00
- 0000003A 45 6E 74 65 72	m2 BYTE "Enter a number: ", 0
-	   20 61 20 6E 75
-	   6D 62 65 72 3A
-	   20 00
- 0000004B 20 00			m3 BYTE " ", 0
- 0000004D 20 3D 20 00		msg_equals BYTE " = ", 0
- 00000051 20 2A 20 00		msg_multiply BYTE " * ", 0
- 00000055 00000000		result DWORD ?
 
  00000000			.code
- 00000000			Multiply PROC
- 00000000  BA 0000003A R	mov edx, offset m2
- 00000005  E8 00000000 E	call WriteString
- 0000000A  E8 00000000 E	call ReadDec;not ReadInt
- 0000000F  A3 00000020 R	mov n1, eax
+ 00000000			main PROC
+ 00000000  E8 00000000 E		call Clrscr  
 
- 00000014  BA 0000003A R	mov edx, offset m2
- 00000019  E8 00000000 E	call WriteString
- 0000001E  E8 00000000 E	call ReadDec
- 00000023  A3 00000024 R	mov n2, eax
+ 00000005  BA 00000000 R		mov	 edx,offset myMessage
+ 0000000A  E8 00000000 E		call WriteString
 
- 00000028  0F AF 05		imul eax, n1
-	   00000020 R
- 0000002F  A3 00000055 R	mov result, eax
+ 0000000F  B8 00000001				MOV EAX, FIRST_QTR
+ 00000014  BB 00000002				MOV EBX, SECOND_QTR
+ 00000019  B9 00000003				MOV ECX, THIRD_QTR
+ 0000001E  BA 00000004				MOV EDX, FOURTH_QTR
+
+ 00000023  E8 00000000 E			CALL DUMPREGS
+					exit
+ 00000028  6A 00	   *	    push   +000000000h
+ 0000002A  E8 00000000 E   *	    call   ExitProcess
+ 0000002F			main ENDP
+
+				END main
+				COMMENT~
+				PROGRAM OUTPUT
+				MASM program example
+
+				  EAX=00000001  EBX=00000002  ECX=00000003  EDX=00000004
+				  ESI=00401005  EDI=00401005  EBP=0019FF94  ESP=0019FF84
+				  EIP=004034C8  EFL=00000202  CF=0  SF=0  ZF=0  OF=0  AF=0  PF=0
 
 
- 00000034  A1 00000020 R	mov eax, n1
- 00000039  E8 00000000 E	call writeDec
-
- 0000003E  BA 00000051 R	mov edx, offset msg_multiply
- 00000043  E8 00000000 E	call WriteString
-
- 00000048  A1 00000024 R	mov eax, n2
- 0000004D  E8 00000000 E	call writeDec
-
- 00000052  BA 0000004D R	mov edx, offset msg_equals
- 00000057  E8 00000000 E	call WriteString
-
- 0000005C  A1 00000055 R	mov eax, result
- 00000061  E8 00000000 E	call writeDec
-
- 00000066  E8 00000000 E	call crlf
- 0000006B  E8 00000000 E	call crlf
- 00000070  E8 00000000 E		call DumpRegs	;display registers
- 00000075  BA 00000000 R		mov	 edx, offset prompt
- 0000007A  E8 00000000 E		call  WriteString; displays “Press any key ...
- 0000007F  E8 00000000 E	call ReadDec;not ReadInt
-
- 00000084  C3			ret
- 00000085			Multiply ENDP
-				END
-				;end Multiply 
-Microsoft (R) Macro Assembler Version 12.00.31101.0	    11/05/15 23:18:12
-Multipl						     Symbols 2 - 1
+~
+Microsoft (R) Macro Assembler Version 12.00.31101.0	    11/06/15 10:43:23
+MASM Template						(main.asm  Symbols 2 - 1
 
 
 
@@ -189,8 +171,8 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 00000059 Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 00000085 Para	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000027 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000002F Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -241,7 +223,6 @@ LocalFree  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 MessageBoxA  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 MsgBoxAsk  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 MsgBox . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-Multiply . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000085 Public STDCALL
 OpenInputFile  . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 ParseDecimal32 . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 ParseInteger32 . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -298,6 +279,7 @@ WriteStackFrame  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 WriteString  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteToFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000002F Public STDCALL
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 wsprintfA  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
@@ -356,9 +338,11 @@ FILE_SHARE_DELETE  . . . . . . .	Number	 00000004h
 FILE_SHARE_READ  . . . . . . . .	Number	 00000001h   
 FILE_SHARE_WRITE . . . . . . . .	Number	 00000002h   
 FILE_WRITE_DATA  . . . . . . . .	Number	 00000002h   
+FIRST_QTR  . . . . . . . . . . .	Number	 00000001h   
 FOCUS_EVENT  . . . . . . . . . .	Number	 00000010h   
 FORMAT_MESSAGE_ALLOCATE_BUFFER .	Number	 00000100h   
 FORMAT_MESSAGE_FROM_SYSTEM . . .	Number	 00001000h   
+FOURTH_QTR . . . . . . . . . . .	Number	 00000004h   
 FormatMessage  . . . . . . . . .	Text   	 FormatMessageA
 GENERIC_ALL  . . . . . . . . . .	Number	 10000000h   
 GENERIC_EXECUTE  . . . . . . . .	Number	 20000000h   
@@ -426,6 +410,7 @@ RIGHT_CTRL_PRESSED . . . . . . .	Number	 00000004h
 ReadConsoleInput . . . . . . . .	Text   	 ReadConsoleInputA
 ReadConsole  . . . . . . . . . .	Text   	 ReadConsoleA
 SCROLLLOCK_ON  . . . . . . . . .	Number	 00000040h   
+SECOND_QTR . . . . . . . . . . .	Number	 00000002h   
 SHIFT_MASK . . . . . . . . . . .	Number	 00000010h   
 SHIFT_PRESSED  . . . . . . . . .	Number	 00000010h   
 STD_ERROR_HANDLE . . . . . . . .	Number	 -0000000Ch   
@@ -433,6 +418,7 @@ STD_INPUT_HANDLE . . . . . . . .	Number	 -0000000Ah
 STD_OUTPUT_HANDLE  . . . . . . .	Number	 -0000000Bh   
 SetConsoleTitle  . . . . . . . .	Text   	 SetConsoleTitleA
 TAB  . . . . . . . . . . . . . .	Number	 00000009h   
+THIRD_QTR  . . . . . . . . . . .	Number	 00000003h   
 TRUE . . . . . . . . . . . . . .	Number	 00000001h   
 TRUNCATE_EXISTING  . . . . . . .	Number	 00000005h   
 VK_11  . . . . . . . . . . . . .	Number	 000000BDh   
@@ -521,7 +507,6 @@ blue . . . . . . . . . . . . . .	Number	 00000001h
 brown  . . . . . . . . . . . . .	Number	 00000006h   
 cyan . . . . . . . . . . . . . .	Number	 00000003h   
 exit . . . . . . . . . . . . . .	Text   	 INVOKE ExitProcess,0
-global . . . . . . . . . . . . .	Byte	 00000010 _DATA	
 gray . . . . . . . . . . . . . .	Number	 00000008h   
 green  . . . . . . . . . . . . .	Number	 00000002h   
 lightBlue  . . . . . . . . . . .	Number	 00000009h   
@@ -530,18 +515,10 @@ lightGray  . . . . . . . . . . .	Number	 00000007h
 lightGreen . . . . . . . . . . .	Number	 0000000Ah   
 lightMagenta . . . . . . . . . .	Number	 0000000Dh   
 lightRed . . . . . . . . . . . .	Number	 0000000Ch   
-m1 . . . . . . . . . . . . . . .	Byte	 00000028 _DATA	
-m2 . . . . . . . . . . . . . . .	Byte	 0000003A _DATA	
-m3 . . . . . . . . . . . . . . .	Byte	 0000004B _DATA	
 magenta  . . . . . . . . . . . .	Number	 00000005h   
-msg_equals . . . . . . . . . . .	Byte	 0000004D _DATA	
-msg_multiply . . . . . . . . . .	Byte	 00000051 _DATA	
-n1 . . . . . . . . . . . . . . .	DWord	 00000020 _DATA	
-n2 . . . . . . . . . . . . . . .	DWord	 00000024 _DATA	
-pressKey . . . . . . . . . . . .	Text   	 "Press <Enter>  ", 0
-prompt . . . . . . . . . . . . .	Byte	 00000000 _DATA	
+myMessage  . . . . . . . . . . .	Byte	 00000000 _DATA	
+quarters . . . . . . . . . . . .	DWord	 00000017 _DATA	
 red  . . . . . . . . . . . . . .	Number	 00000004h   
-result . . . . . . . . . . . . .	DWord	 00000055 _DATA	
 white  . . . . . . . . . . . . .	Number	 0000000Fh   
 wsprintf . . . . . . . . . . . .	Text   	 wsprintfA
 yellow . . . . . . . . . . . . .	Number	 0000000Eh   

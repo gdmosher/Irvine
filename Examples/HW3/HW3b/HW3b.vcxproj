@@ -11,17 +11,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <MASM Include="Add3Integers.asm" />
-    <MASM Include="AddSub.asm" />
-    <MASM Include="ArraySum.asm" />
-    <MASM Include="CStringCopy.asm" />
-    <MASM Include="InClass1105.asm" />
     <MASM Include="main.asm" />
-    <MASM Include="Multiply.asm" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{4164AA65-1EF9-4E69-899B-D1BED776070B}</ProjectGuid>
-    <ProjectName>TestBedProject1</ProjectName>
+    <ProjectGuid>{30C76A99-E7A0-4ADA-9E4F-FD1FF891E30F}</ProjectGuid>
+    <ProjectName>HW3b</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -67,8 +61,6 @@
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <EntryPointSymbol>
-      </EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
