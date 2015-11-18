@@ -25,6 +25,7 @@ TITLE Add and Subtract
 ; This program adds and subtracts 32 - bit integers.
 INCLUDE Irvine32.inc
 InClass1105 PROTO
+InClass1112 PROTO
 Add3Integers PROTO
 Multiply PROTO
 AddSub PROTO
