@@ -15,6 +15,7 @@
     <MASM Include="AddSub.asm" />
     <MASM Include="ArraySum.asm" />
     <MASM Include="CStringCopy.asm" />
+    <MASM Include="HW4.asm" />
     <MASM Include="InClass1105.asm" />
     <MASM Include="InClass1112.asm" />
     <MASM Include="main.asm" />

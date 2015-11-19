@@ -6,7 +6,7 @@ TITLE InClass1112
 
 INCLUDE Irvine32.inc
 .data
-myMessage BYTE "MASM program example",0dh,0ah,0
+myMessage BYTE "InClass1112",0dh,0ah,0
 grade byte "A"
 finalGrade byte ?
 msg byte "Your grade is ",0
