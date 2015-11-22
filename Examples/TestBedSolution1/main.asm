@@ -26,6 +26,7 @@ TITLE Add and Subtract
 INCLUDE Irvine32.inc
 InClass1105 PROTO
 InClass1112 PROTO
+InClass1119 PROTO
 HW4 PROTO
 Add3Integers PROTO
 Multiply PROTO
@@ -46,16 +47,18 @@ main	PROC
 
 mov edx, offset global; use this line just to find Data Seg in EDX
 
-Call HW4
+Call InClass1119
 COMMENT~
+Call HW4
 Call InClass1112
 Call InClass1105
 Call Add3Integers
 Call Multiply
 Call AddSub
 Call ArraySum
-~
 Call CStringCopy
+~
+jmp done
 
 .data
 var1	DWORD	50000h
@@ -102,6 +105,7 @@ call crlf
 	call  WriteString; displays “Press any key ...
 call ReadDec;not ReadInt
 
+done:
 	exit
 main ENDP
 END main
