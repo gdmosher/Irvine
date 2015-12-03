@@ -59,20 +59,33 @@ loop2:
 	.data
 	number3		SDWORD	1
 	sum3		SDWORD	0
-;	msg1	BYTE	"The sum equals ",0
+	product3	SDWORD	0
+	msg13	BYTE	"The sum of the first n integers equals ",0
+	msg13b	BYTE	"The product of the first n integers equals ",0
 ;	msg2	BYTE	".",0dh,0ah,0
 	.code
 	COUNT = 5
 	mov	ecx, COUNT-1
 	mov eax, number3
+	mov ebx, number3
 loop3:
 	inc number3
 	add eax, number3
+	imul ebx, number3
 	loop loop3
-	mov sum, eax
+	mov sum3, eax
+	mov product3, ebx
 
-	mov edx, offset msg1
+	mov edx, offset msg13
 	call WriteString
+	mov eax, sum3
+	call WriteDec
+	mov edx, offset msg2
+	call WriteString
+	call CrLf
+	mov edx, offset msg13b
+	call WriteString
+	mov eax, product3
 	call WriteDec
 	mov edx, offset msg2
 	call WriteString
@@ -122,7 +135,7 @@ done6:
 ;	EXERCISE 7
 	.data
 	max		SDWORD	0	;use ebx instead
-	numbers7	SDWORD	3,5,1,9,12,77,31,2,71,4
+	numbers7	SDWORD	3,5,1,9,12,-77,31,2,71,4
 	msg7	BYTE	"The highest value is ",0
 	.code
 	mov ecx, LENGTHOF numbers7
@@ -130,8 +143,11 @@ done6:
 	mov ebx, 0
 L7:
 	mov eax, [esi]
-	.IF eax > ebx		;cmp eax, [esi]
+;	    SDWORD PTR is a cast to force signed comparison
+	.IF SDWORD PTR eax > ebx		;cmp eax, [esi]
 		mov ebx, eax
+	.ELSE				;
+		mov eax, eax	;dummy code to test .ELSE
 	.ENDIF
 	add esi, TYPE numbers7
 	loop L7
@@ -141,16 +157,17 @@ L7:
 	mov eax, ebx	;mov max into acc
 	call WriteInt
 	call CrLf
-	COMMENT~
+
+;	COMMENT~
 ;	EXERCISE 8
 	.data
 	count8	SDWORD	0
 	msg8	BYTE	"Squares of all number from 0 to 10:",0dh,0ah,0
 	msg81	BYTE	"   ",0
 	.code
-	mov edx, msg8
+	mov edx, OFFSET msg8
 	Call WriteString
-	mov edx, msg81
+	mov edx, OFFSET msg81
 
 	mov ecx, count8	;0
 	.REPEAT
@@ -161,10 +178,10 @@ L7:
 	Call WriteInt
 	Call CrLf
 	inc ecx
-	.UNTIL ecx=11
-	mov edx, offset msg8
-	call WriteString
-	~
+	.UNTIL ecx==11
+	Call CrLf
+;	~
+
 	.data
 	caption BYTE "Warning!",0
 	message BYTE "There is never too much of a good thing.",0

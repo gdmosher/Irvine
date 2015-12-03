@@ -37,7 +37,7 @@ main PROC
 loop1:
 	mov ebx, [esi]
 	cmp ebx, 50
-	jg skipAdd
+	ja skipAdd
 	add eax, [esi]
 skipAdd:
 	add esi, TYPE numbers							;4 bytes (32 bits)
@@ -62,7 +62,7 @@ skipAdd:
 loop1e:
 	mov ebx, [esi]
 	cmp ebx, 50
-	jg skipAdde
+	ja skipAdde
 	add eax, [esi]
 skipAdde:
 	add esi, TYPE numbers							;4 bytes (32 bits)

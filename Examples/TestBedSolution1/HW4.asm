@@ -86,6 +86,10 @@ HW4 PROC
 	call DumpRegs
 	call CrLf
 
+;Question 10
+	mov eax, 80000000h
+	neg eax
+	call DumpRegs
 
 
 
