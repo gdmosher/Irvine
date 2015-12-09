@@ -49,9 +49,9 @@ main	PROC
 mov edx, offset global; use this line just to find Data Seg in EDX
 
 Call InClass1203
+COMMENT~
 Call InClass1119
 Call HW4
-COMMENT~
 Call InClass1112
 Call InClass1105
 Call Add3Integers
