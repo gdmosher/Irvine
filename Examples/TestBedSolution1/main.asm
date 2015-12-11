@@ -28,6 +28,7 @@ InClass1105 PROTO
 InClass1112 PROTO
 InClass1119 PROTO
 InClass1203 PROTO
+InClass1210 PROTO
 HW4 PROTO
 Add3Integers PROTO
 Multiply PROTO
@@ -48,6 +49,7 @@ main	PROC
 
 mov edx, offset global; use this line just to find Data Seg in EDX
 
+Call InClass1210
 Call InClass1203
 COMMENT~
 Call InClass1119

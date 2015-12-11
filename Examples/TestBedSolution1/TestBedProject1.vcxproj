@@ -20,6 +20,7 @@
     <MASM Include="InClass1112.asm" />
     <MASM Include="InClass1119.asm" />
     <MASM Include="InClass1203.asm" />
+    <MASM Include="InClass1210.asm" />
     <MASM Include="main.asm" />
     <MASM Include="Multiply.asm" />
   </ItemGroup>

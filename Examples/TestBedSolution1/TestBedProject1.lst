@@ -1,8 +1,8 @@
-Microsoft (R) Macro Assembler Version 12.00.31101.0	    12/08/15 23:42:42
-InClass120						     Page 1 - 1
+Microsoft (R) Macro Assembler Version 12.00.31101.0	    12/11/15 00:16:24
+InClass121						     Page 1 - 1
 
 
-				TITLE InClass1203
+				TITLE InClass1210
 
 				; Description:
 				; 
@@ -27,274 +27,57 @@ Microsoft (R) Macro Assembler Version 12.00.31101.0	    12/08/15 23:42:42
 			      C .LIST
 			      C 
  00000000			.data
- 00000000 49 6E 43 6C 61	myMessage BYTE "InClass1203",0dh,0ah,0
-	   73 73 31 32 30
-	   33 0D 0A 00
-
+ 00000000 4D 41 53 4D 20	myMessage BYTE "MASM program example",0dh,0ah,0
+	   70 72 6F 67 72
+	   61 6D 20 65 78
+	   61 6D 70 6C 65
+	   0D 0A 00
+ 00000017  00001388 [		buffer BYTE 5000 dup(?)
+	    00
+	   ]
+ 0000139F 00000003		val1 DWORD 3
+ 000013A3 00000004		val2 DWORD 4
+ 000013A7 54 68 65 20 73	msg BYTE "The sum equals ",0
+	   75 6D 20 65 71
+	   75 61 6C 73 20
+	   00
 
  00000000			.code
- 00000000			InClass1203 PROC
+ 00000000			ShowMessage PROC
+ 00000000			ShowMessage ENDP
+ 00000000			InClass1210 PROC
  00000000  E8 00000000 E		call Clrscr  
 
  00000005  BA 00000000 R		mov	 edx,offset myMessage
  0000000A  E8 00000000 E		call WriteString
 
-					;EXERCISE#1
- = 00001388				BUFFER_SIZE = 5000
- 0000000E				.data
- 0000000E  00001388 [				buffer BYTE BUFFER_SIZE DUP(?)
-	    00
-	   ]
- 00001396 43 3A 5C 74 65			myFile BYTE "C:\test.txt",0
-	   73 74 2E 74 78
-	   74 00
- 000013A2  00000028 [				fileName	BYTE 40 DUP(0),0	;init with 40 nulls plus a null term
-	    00
-	   ] 00
- 000013CB 00000000				bytesRead	DWORD ?
- 000013CF 00000000				fileHandle	DWORD ?
-
- 000013D3 45 6E 74 65 72			promptFileName	BYTE	"Enter a file name:  ",0
-	   20 61 20 66 69
-	   6C 65 20 6E 61
-	   6D 65 3A 20 20
-	   00
- 000013E8 49 6E 70 75 74			promptInput		BYTE	"Input string from the file:  ",0dh,0ah,0
-	   20 73 74 72 69
-	   6E 67 20 66 72
-	   6F 6D 20 74 68
-	   65 20 66 69 6C
-	   65 3A 20 20 0D
-	   0A 00
- 0000000F				.code
- 0000000F  E8 00000000 E			call Clrscr
- 00000014  BA 00001396 R			mov edx, OFFSET myfile
- 00000019  E8 00000000 E			call OpenInputfile
- 0000001E  A3 000013CF R			MOV FILEHANDLE, EAX
- 00000023  E8 00000000 E			call WriteWindowsMsg
- 00000028  E8 00000000 E			call DumpRegs
-
-				;		mov eax, fileHandle				;filehandle is already in eax
- 0000002D  BA 0000000E R			mov edx, OFFSET buffer
- 00000032  B9 00001388				mov ecx, BUFFER_SIZE
- 00000037  E8 00000000 E			call ReadFromFile
-
- 0000003C  A3 000013CB R			mov bytesRead, eax
- 00000041  E8 00000000 E			call WriteWindowsMsg
-
- 00000046  E8 00000000 E			call DumpRegs
- 0000004B  E8 00000000 E			call Crlf
- 00000050  E8 00000000 E			call Crlf
-
- 00000055  BA 0000000E R			mov edx, OFFSET buffer
- 0000005A  E8 00000000 E			call WriteString
-
- 0000005F  E8 00000000 E			call Crlf
- 00000064  E8 00000000 E			call Crlf
- 00000069  A1 000013CF R			mov eax, fileHandle
- 0000006E  E8 00000000 E			call DumpRegs
- 00000073  E8 00000000 E			call CloseFile
- 00000078  E8 00000000 E			call WriteWindowsMsg
- 0000007D  E8 00000000 E			call DumpRegs
- 00000082  E8 00000000 E			call Crlf
- 00000087  E8 00000000 E			call Crlf		
- 0000008C  E8 00000000 E			CALL CRLF
-
-
-					;EXERCISE#2 (FOR THE QUIZ)
- 00000091				.code
- 00000091  E8 00000000 E			call Crlf
- 00000096  E8 00000000 E			call Crlf
- 0000009B  BA 000013D3 R			mov edx, OFFSET promptFileName
- 000000A0  E8 00000000 E			call WriteString
-
-						;read in the file anme
- 000000A5  BA 000013A2 R			mov edx, OFFSET fileName
- 000000AA  B9 00000029				mov ecx, SIZEOF fileName
- 000000AF  E8 00000000 E			call ReadString
-
-						;open the file
- 000000B4  BA 000013A2 R			mov edx, OFFSET fileName
- 000000B9  E8 00000000 E			call OpenInputFile
- 000000BE  A3 000013CF R			mov filehandle, eax
-
-						;check to see if error opening file
- 000000C3  83 E8 FF				sub eax, INVALID_HANDLE_VALUE
-						;if no error jump to read
- 000000C6  75 0C				jne read
-						;if error, display the message and jump to close_and_exit
- 000000C8  E8 00000000 E			call WriteWindowsMsg
- 000000CD  E8 00000000 E			call Crlf
- 000000D2  EB 32				jmp close_and_exit
- 000000D4				read:
-						;read the file into the buffer
- 000000D4  BA 0000000E R			mov edx, OFFSET buffer
- 000000D9  B9 00001388				mov ecx, BUFFER_SIZE
- 000000DE  E8 00000000 E			call ReadFromFile
-
-						;display the string
- 000000E3  E8 00000000 E			call Crlf
- 000000E8  BA 000013E8 R			mov edx, OFFSET promptInput
- 000000ED  E8 00000000 E			call WriteString
- 000000F2  BA 0000000E R			mov edx, OFFSET buffer
- 000000F7  E8 00000000 E			call WriteString
- 000000FC  E8 00000000 E			call Crlf
- 00000101  E8 00000000 E			call Crlf
- 00000106				close_and_exit:
-						;close the file
- 00000106  A1 000013CF R			mov eax, fileHandle
- 0000010B  E8 00000000 E			call CloseFile
-
-					;Ex_5-1 positive or negative
- 00000110				.code
- = 00000020			List_SIZE = 32
-
- 00001408			.data
- 00001408 45 6E 74 65 72		getNumber BYTE "Enter a number:  ",0
-	   20 61 20 6E 75
-	   6D 62 65 72 3A
-	   20 20 00
- 0000141A 54 68 65 20 6E		sayNegative BYTE "The number is negative.",0dh,0ah,0
-	   75 6D 62 65 72
-	   20 69 73 20 6E
-	   65 67 61 74 69
-	   76 65 2E 0D 0A
-	   00
- 00001434 54 68 65 20 6E		sayPositive BYTE "The number is positive.",0dh,0ah,0
-	   75 6D 62 65 72
-	   20 69 73 20 70
-	   6F 73 69 74 69
-	   76 65 2E 0D 0A
-	   00
- 0000144E 54 68 65 20 6E		sayEven BYTE "The number is zero.",0dh,0ah,0
-	   75 6D 62 65 72
-	   20 69 73 20 7A
-	   65 72 6F 2E 0D
-	   0A 00
- 00000110			.code
- 00000110  B8 00000000			mov eax, 0
- 00000115  BA 00001408 R		mov edx, OFFSET getNumber
- 0000011A  E8 00000000 E		call WriteString
- 0000011F  E8 00000000 E		call ReadInt
-
- 00000124  83 F8 00			cmp eax, 0
- 00000127  7C 11			jl NegNum
-
- 00000129  83 F8 00			cmp eax, 0
- 0000012C  74 18			je ZeroNum
- 0000012E  BA 00001434 R		mov edx, OFFSET sayPositive
- 00000133  E8 00000000 E		call WriteString
- 00000138  EB 18			jmp Done2
-
- 0000013A			NegNum:
- 0000013A  BA 0000141A R		mov edx, OFFSET sayNegative
- 0000013F  E8 00000000 E		call WriteString
- 00000144  EB 0C			jmp Done2
-
- 00000146			ZeroNum:
- 00000146  BA 0000144E R		mov edx, OFFSET sayEven
- 0000014B  E8 00000000 E		call WriteString
- 00000150  EB 00			jmp Done2
-
- 00000152			Done2:
- 00000152  E8 00000000 E		call Crlf
-
-				;EX_5-2   a .while loop
- 00001464			.data
- 00001464 00000000			count DWORD 0
- 00001468 48 65 6C 6C 6F		msg BYTE "Hello",0
-	   00
- 00000157			.code
-					.WHILE count < 5
- 00000157  EB 15	   *	    jmp    @C0001
- 00000159		   *@C0002:
- 00000159  BA 00001468 R			mov edx, OFFSET msg
- 0000015E  E8 00000000 E			call WriteString
- 00000163  E8 00000000 E			call Crlf
- 00000168  FF 05 00001464 R			inc count
-					.ENDW
- 0000016E		   *@C0001:
- 0000016E  83 3D 00001464 R
-	   05		   *	    cmp    count, 005h
- 00000175  72 E2	   *	    jb	@C0002
-
-					;EX_5-4 counting negative random numbers (for the quiz)
-				;INCLUDE Irvine32.inc
-
- 0000146E			.data
- 0000146E  00000014 [			intArray SDWORD 20 DUP(?)
-	    00000000
-	   ]
- 000014BE 00000000			count2 DWORD 0
- 000014C2 48 65 72 65 20		displayNums BYTE "Here are 20 random 32 bit signed integers (SDWORD's):",0dh,0ah,0dh,0ah,0
-	   61 72 65 20 32
-	   30 20 72 61 6E
-	   64 6F 6D 20 33
-	   32 20 62 69 74
-	   20 73 69 67 6E
-	   65 64 20 69 6E
-	   74 65 67 65 72
-	   73 20 28 53 44
-	   57 4F 52 44 27
-	   73 29 3A 0D 0A
-	   0D 0A 00
- 000014FC 54 68 65 20 6E		negNumCount BYTE "The number of negative numbers is:  ",0
-	   75 6D 62 65 72
-	   20 6F 66 20 6E
-	   65 67 61 74 69
-	   76 65 20 6E 75
-	   6D 62 65 72 73
-	   20 69 73 3A 20
-	   20 00
- 00000177			.code
- 00000177  E8 00000000 E		call Randomize
-					
-					; Fill the array with random values
- 0000017C  BE 0000146E R		mov  esi,OFFSET intArray 		; point to the array
- 00000181  B9 00000014			mov  ecx,LENGTHOF intArray 		; loop counter
-
- 00000186  BA 000014C2 R		mov edx, OFFSET displayNums
- 0000018B  E8 00000000 E		call WriteString
-
- 00000190  E8 00000000 E	L1:	call	Random32					; EAX = random value
- 00000195  E8 00000000 E		call	WriteInt
- 0000019A  E8 00000000 E		call	Crlf
- 0000019F  89 06			mov	[esi],eax
- 000001A1  83 C6 04			add	esi,TYPE intArray
- 000001A4  E2 EA			loop	L1
-
-					; Search for negative values
- 000001A6  BE 0000146E R		mov	esi,OFFSET intArray 	; point to the array
- 000001AB  B9 00000014			mov	ecx,LENGTHOF intArray 	; loop counter
- 000001B0			L2:	
- 000001B0  8B 06			mov eax, [esi]
- 000001B2  83 F8 00			cmp  eax ,0 				; compare value to zero
-
-				;  negative value?
- 000001B5  7D 06			jge  L3					; jump if greater than or equal to  0
- 000001B7  FF 05 000014BE R		inc  count2				; if negative, add to count
-					
- 000001BD			L3:
- 000001BD  83 C6 04			add  esi,4
- 000001C0  E2 EE			loop L2
- 000001C2  E8 00000000 E		call Crlf
- 000001C7  BA 000014FC R		mov edx, OFFSET negNumCount
- 000001CC  E8 00000000 E		call WriteString
-
- 000001D1  A1 000014BE R		mov  eax,count2
- 000001D6  E8 00000000 E		call WriteDec
- 000001DB  E8 00000000 E		call Crlf
- 000001E0  E8 00000000 E		call Crlf
-
-						
- 000001E5				done:
- 000001E5  C3					ret
-
- 000001E6			InClass1203 ENDP
+ 0000000F  FF 35 000013A3 R		push val2
+ 00000015  FF 35 0000139F R		push val1
+ 0000001B  E8 00000026			call AddNumbers
+ 00000020  BA 000013A7 R		mov edx, OFFSET msg
+ 00000025  E8 00000000 E		call WriteString
+ 0000002A  E8 00000000 E		call WriteDec
+ 0000002F  E8 00000000 E		call Crlf
+ 00000034  E8 00000000 E		call Crlf
+ 00000039  8F 05 0000139F R		pop val1
+ 0000003F  8F 05 000013A3 R		pop val2
+ 00000045  C3				ret
+ 00000046			InClass1210 ENDP
+ 00000046			.code
+ 00000046			AddNumbers PROC
+ 00000046  55				push ebp
+ 00000047  8B EC			mov ebp, esp
+ 00000049  8B 45 0C			mov eax, [ebp+12]
+ 0000004C  03 45 08			add eax, [ebp+8]
+ 0000004F  5D				pop ebp
+ 00000050  C3				ret
+ 00000051			AddNumbers ENDP
+ 00000051			ShowMessage2 PROC
+ 00000051			ShowMessage2 ENDP
 				END
-				;end InClass1203 
-Microsoft (R) Macro Assembler Version 12.00.31101.0	    12/08/15 23:42:42
-InClass120						     Symbols 2 - 1
+				;end InClass1203
+Microsoft (R) Macro Assembler Version 12.00.31101.0	    12/11/15 00:16:24
+InClass121						     Symbols 2 - 1
 
 
 
@@ -387,14 +170,15 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 00001521 Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 000001E6 Para	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 000013B7 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000051 Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
 
                 N a m e                 Type     Value    Attr
 
+AddNumbers . . . . . . . . . . .	P Near	 00000046 _TEXT	Length= 0000000B Public STDCALL
 CloseFile  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 CloseHandle  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 Clrscr . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -434,16 +218,7 @@ HeapCreate . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 HeapDestroy  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 HeapFree . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 HeapSize . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-InClass1203  . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 000001E6 Public STDCALL
-  read . . . . . . . . . . . . .	L Near	 000000D4 _TEXT	
-  close_and_exit . . . . . . . .	L Near	 00000106 _TEXT	
-  NegNum . . . . . . . . . . . .	L Near	 0000013A _TEXT	
-  ZeroNum  . . . . . . . . . . .	L Near	 00000146 _TEXT	
-  Done2  . . . . . . . . . . . .	L Near	 00000152 _TEXT	
-  L1 . . . . . . . . . . . . . .	L Near	 00000190 _TEXT	
-  L2 . . . . . . . . . . . . . .	L Near	 000001B0 _TEXT	
-  L3 . . . . . . . . . . . . . .	L Near	 000001BD _TEXT	
-  done . . . . . . . . . . . . .	L Near	 000001E5 _TEXT	
+InClass1210  . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000046 Public STDCALL
 IsDigit  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 LocalFree  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 MessageBoxA  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -479,6 +254,8 @@ SetFilePointer . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 SetLocalTime . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetTextColor . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 ShowFPUStack . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+ShowMessage2 . . . . . . . . . .	P Near	 00000051 _TEXT	Length= 00000000 Public STDCALL
+ShowMessage  . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000000 Public STDCALL
 Sleep  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 StrLength  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 Str_compare  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -524,7 +301,6 @@ Symbols:
 @fardata . . . . . . . . . . . .	Text   	 FLAT
 @stack . . . . . . . . . . . . .	Text   	 FLAT
 ALT_MASK . . . . . . . . . . . .	Number	 00000003h   
-BUFFER_SIZE  . . . . . . . . . .	Number	 00001388h   
 CAPSLOCK_ON  . . . . . . . . . .	Number	 00000080h   
 CREATE_ALWAYS  . . . . . . . . .	Number	 00000002h   
 CREATE_NEW . . . . . . . . . . .	Number	 00000001h   
@@ -597,7 +373,6 @@ KEY_EVENT  . . . . . . . . . . .	Number	 00000001h
 KEY_MASKS  . . . . . . . . . . .	Number	 0000001Fh   
 LEFT_ALT_PRESSED . . . . . . . .	Number	 00000002h   
 LEFT_CTRL_PRESSED  . . . . . . .	Number	 00000008h   
-List_SIZE  . . . . . . . . . . .	Number	 00000020h   
 MB_ABORTRETRYIGNORE  . . . . . .	Number	 00000002h   
 MB_APPLMODAL . . . . . . . . . .	Number	 00000000h   
 MB_CANCELTRYCONTINUE . . . . . .	Number	 00000006h   
@@ -728,19 +503,11 @@ WriteConsole . . . . . . . . . .	Text   	 WriteConsoleA
 black  . . . . . . . . . . . . .	Number	 00000000h   
 blue . . . . . . . . . . . . . .	Number	 00000001h   
 brown  . . . . . . . . . . . . .	Number	 00000006h   
-buffer . . . . . . . . . . . . .	Byte	 0000000E _DATA	
-bytesRead  . . . . . . . . . . .	DWord	 000013CB _DATA	
-count2 . . . . . . . . . . . . .	DWord	 000014BE _DATA	
-count  . . . . . . . . . . . . .	DWord	 00001464 _DATA	
+buffer . . . . . . . . . . . . .	Byte	 00000017 _DATA	
 cyan . . . . . . . . . . . . . .	Number	 00000003h   
-displayNums  . . . . . . . . . .	Byte	 000014C2 _DATA	
 exit . . . . . . . . . . . . . .	Text   	 INVOKE ExitProcess,0
-fileHandle . . . . . . . . . . .	DWord	 000013CF _DATA	
-fileName . . . . . . . . . . . .	Byte	 000013A2 _DATA	
-getNumber  . . . . . . . . . . .	Byte	 00001408 _DATA	
 gray . . . . . . . . . . . . . .	Number	 00000008h   
 green  . . . . . . . . . . . . .	Number	 00000002h   
-intArray . . . . . . . . . . . .	DWord	 0000146E _DATA	
 lightBlue  . . . . . . . . . . .	Number	 00000009h   
 lightCyan  . . . . . . . . . . .	Number	 0000000Bh   
 lightGray  . . . . . . . . . . .	Number	 00000007h   
@@ -748,16 +515,11 @@ lightGreen . . . . . . . . . . .	Number	 0000000Ah
 lightMagenta . . . . . . . . . .	Number	 0000000Dh   
 lightRed . . . . . . . . . . . .	Number	 0000000Ch   
 magenta  . . . . . . . . . . . .	Number	 00000005h   
-msg  . . . . . . . . . . . . . .	Byte	 00001468 _DATA	
-myFile . . . . . . . . . . . . .	Byte	 00001396 _DATA	
+msg  . . . . . . . . . . . . . .	Byte	 000013A7 _DATA	
 myMessage  . . . . . . . . . . .	Byte	 00000000 _DATA	
-negNumCount  . . . . . . . . . .	Byte	 000014FC _DATA	
-promptFileName . . . . . . . . .	Byte	 000013D3 _DATA	
-promptInput  . . . . . . . . . .	Byte	 000013E8 _DATA	
 red  . . . . . . . . . . . . . .	Number	 00000004h   
-sayEven  . . . . . . . . . . . .	Byte	 0000144E _DATA	
-sayNegative  . . . . . . . . . .	Byte	 0000141A _DATA	
-sayPositive  . . . . . . . . . .	Byte	 00001434 _DATA	
+val1 . . . . . . . . . . . . . .	DWord	 0000139F _DATA	
+val2 . . . . . . . . . . . . . .	DWord	 000013A3 _DATA	
 white  . . . . . . . . . . . . .	Number	 0000000Fh   
 wsprintf . . . . . . . . . . . .	Text   	 wsprintfA
 yellow . . . . . . . . . . . . .	Number	 0000000Eh   
