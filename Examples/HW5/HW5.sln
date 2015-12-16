@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HW5", "HW5\HW5.vcxproj", "{
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExtraCredit", "ExtraCredit\ExtraCredit.vcxproj", "{0B3DB821-7C21-4485-9ED4-69454EF0020A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HW6", "HW6\HW6.vcxproj", "{6E62B2EE-EDE5-4B72-A8B1-65EC8DC69EBF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -23,6 +25,10 @@ Global
 		{0B3DB821-7C21-4485-9ED4-69454EF0020A}.Debug|Win32.Build.0 = Debug|Win32
 		{0B3DB821-7C21-4485-9ED4-69454EF0020A}.Release|Win32.ActiveCfg = Release|Win32
 		{0B3DB821-7C21-4485-9ED4-69454EF0020A}.Release|Win32.Build.0 = Release|Win32
+		{6E62B2EE-EDE5-4B72-A8B1-65EC8DC69EBF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6E62B2EE-EDE5-4B72-A8B1-65EC8DC69EBF}.Debug|Win32.Build.0 = Debug|Win32
+		{6E62B2EE-EDE5-4B72-A8B1-65EC8DC69EBF}.Release|Win32.ActiveCfg = Release|Win32
+		{6E62B2EE-EDE5-4B72-A8B1-65EC8DC69EBF}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
