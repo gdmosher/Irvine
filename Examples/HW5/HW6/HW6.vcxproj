@@ -13,6 +13,9 @@
   <ItemGroup>
     <MASM Include="main.asm" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="HW6.lst" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6E62B2EE-EDE5-4B72-A8B1-65EC8DC69EBF}</ProjectGuid>
     <ProjectName>HW6</ProjectName>

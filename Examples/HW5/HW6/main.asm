@@ -33,24 +33,24 @@ nextNum:
 	add esi, TYPE numbers
 	loop nextNum
 	pop ebp
-	ret
+	ret 8
 GetNums ENDP
-ShowNums PROC
-	push ebp
-	mov ebp, esp
+ShowNums PROC USES eax ecx edx esi, a:DWORD, b:DWORD
+;	push ebp
+;	mov ebp, esp
 	mov edx, OFFSET msg2
 	call WriteString
 	call Crlf
-	mov esi, [ebp+8]			;OFFSET numbers
-	mov ecx, [ebp+12]			;LENGTHOF numbers
+	mov esi, a;[ebp+8]			;OFFSET numbers
+	mov ecx, b;[ebp+12]			;LENGTHOF numbers
 nextNum2:
 	mov eax, [esi]
 	call WriteDec
 	call Crlf
 	add esi, TYPE numbers
 	loop nextNum2
-	pop ebp
-	ret
+;	pop ebp
+	ret							;STDCALL does ret 8
 ShowNums ENDP
 main PROC
 	call Clrscr  
@@ -67,8 +67,8 @@ main PROC
 	numbers	DWORD	5 dup(0)
 
 	.code
-	push LENGTHOF numbers
-	push OFFSET numbers
+	push LENGTHOF numbers	;parameter 2 - notice reverse order
+	push OFFSET numbers		;parameter 1 - for STDCALL
 	call GetNums
 ;	call Clrscr
 	push LENGTHOF numbers

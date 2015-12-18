@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 12.00.31101.0	    12/15/15 20:49:32
+Microsoft (R) Macro Assembler Version 12.00.31101.0	    12/17/15 16:12:43
 MASM Template						(main.asm  Page 1 - 1
 
 
@@ -55,31 +55,43 @@ Microsoft (R) Macro Assembler Version 12.00.31101.0	    12/15/15 20:49:32
  00000029  83 C6 04			add esi, TYPE numbers
  0000002C  E2 EA			loop nextNum
  0000002E  5D				pop ebp
- 0000002F  C3				ret
- 00000030			GetNums ENDP
- 00000030			ShowNums PROC
- 00000030  55				push ebp
- 00000031  8B EC			mov ebp, esp
- 00000033  BA 00000031 R		mov edx, OFFSET msg2
- 00000038  E8 00000000 E		call WriteString
- 0000003D  E8 00000000 E		call Crlf
- 00000042  8B 75 08			mov esi, [ebp+8]			;OFFSET numbers
- 00000045  8B 4D 0C			mov ecx, [ebp+12]			;LENGTHOF numbers
- 00000048			nextNum2:
- 00000048  8B 06			mov eax, [esi]
- 0000004A  E8 00000000 E		call WriteDec
- 0000004F  E8 00000000 E		call Crlf
- 00000054  83 C6 04			add esi, TYPE numbers
- 00000057  E2 EF			loop nextNum2
- 00000059  5D				pop ebp
- 0000005A  C3				ret
- 0000005B			ShowNums ENDP
- 0000005B			main PROC
- 0000005B  E8 00000000 E		call Clrscr  
+ 0000002F  C2 0008			ret 8
+ 00000032			GetNums ENDP
+ 00000032			ShowNums PROC USES eax ecx edx esi, a:DWORD, b:DWORD
+				;	push ebp
+				;	mov ebp, esp
+ 00000032  55		   *	    push   ebp
+ 00000033  8B EC	   *	    mov    ebp, esp
+ 00000035  50		   *	    push   eax
+ 00000036  51		   *	    push   ecx
+ 00000037  52		   *	    push   edx
+ 00000038  56		   *	    push   esi
+ 00000039  BA 00000031 R		mov edx, OFFSET msg2
+ 0000003E  E8 00000000 E		call WriteString
+ 00000043  E8 00000000 E		call Crlf
+ 00000048  8B 75 08			mov esi, a;[ebp+8]			;OFFSET numbers
+ 0000004B  8B 4D 0C			mov ecx, b;[ebp+12]			;LENGTHOF numbers
+ 0000004E			nextNum2:
+ 0000004E  8B 06			mov eax, [esi]
+ 00000050  E8 00000000 E		call WriteDec
+ 00000055  E8 00000000 E		call Crlf
+ 0000005A  83 C6 04			add esi, TYPE numbers
+ 0000005D  E2 EF			loop nextNum2
+				;	pop ebp
+					ret
+ 0000005F  5E		   *	    pop    esi
+ 00000060  5A		   *	    pop    edx
+ 00000061  59		   *	    pop    ecx
+ 00000062  58		   *	    pop    eax
+ 00000063  C9		   *	    leave  
+ 00000064  C2 0008	   *	    ret    00008h
+ 00000067			ShowNums ENDP
+ 00000067			main PROC
+ 00000067  E8 00000000 E		call Clrscr  
 
- 00000060  BA 00000000 R		mov	 edx,offset myMessage
- 00000065  E8 00000000 E		call WriteString
- 0000006A  E8 00000000 E		call CrLf
+ 0000006C  BA 00000000 R		mov	 edx,offset myMessage
+ 00000071  E8 00000000 E		call WriteString
+ 00000076  E8 00000000 E		call CrLf
 
 				;	HW6
  00000006				.data
@@ -101,28 +113,28 @@ Microsoft (R) Macro Assembler Version 12.00.31101.0	    12/15/15 20:49:32
 	    00000000
 	   ]
 
- 0000006F				.code
- 0000006F  6A 05			push LENGTHOF numbers
- 00000071  68 00000048 R		push OFFSET numbers
- 00000076  E8 FFFFFF85			call GetNums
+ 0000007B				.code
+ 0000007B  6A 05			push LENGTHOF numbers	;parameter 2 - notice reverse order
+ 0000007D  68 00000048 R		push OFFSET numbers		;parameter 1 - for STDCALL
+ 00000082  E8 FFFFFF79			call GetNums
 				;	call Clrscr
- 0000007B  6A 05			push LENGTHOF numbers
- 0000007D  68 00000048 R		push OFFSET numbers
- 00000082  E8 FFFFFFA9			call ShowNums
- 00000087  E8 00000000 E		call CrLf
- 0000008C  E8 00000000 E		call Crlf
+ 00000087  6A 05			push LENGTHOF numbers
+ 00000089  68 00000048 R		push OFFSET numbers
+ 0000008E  E8 FFFFFF9F			call ShowNums
+ 00000093  E8 00000000 E		call CrLf
+ 00000098  E8 00000000 E		call Crlf
 
 
- 00000091  E8 00000000 E		call DumpRegs
+ 0000009D  E8 00000000 E		call DumpRegs
 
- 00000096  EB 00			jmp done
+ 000000A2  EB 00			jmp done
 
- 00000098			done:
- 00000098  E8 00000000 E		call WaitMsg
+ 000000A4			done:
+ 000000A4  E8 00000000 E		call WaitMsg
 					exit
- 0000009D  6A 00	   *	    push   +000000000h
- 0000009F  E8 00000000 E   *	    call   ExitProcess
- 000000A4			main ENDP
+ 000000A9  6A 00	   *	    push   +000000000h
+ 000000AB  E8 00000000 E   *	    call   ExitProcess
+ 000000B0			main ENDP
 
 				END main
 				COMMENT~
@@ -142,7 +154,7 @@ Microsoft (R) Macro Assembler Version 12.00.31101.0	    12/15/15 20:49:32
 
 				Press any key to continue...
 ~
-Microsoft (R) Macro Assembler Version 12.00.31101.0	    12/15/15 20:49:32
+Microsoft (R) Macro Assembler Version 12.00.31101.0	    12/17/15 16:12:43
 MASM Template						(main.asm  Symbols 2 - 1
 
 
@@ -237,7 +249,7 @@ Segments and Groups:
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
 _DATA  . . . . . . . . . . . . .	32 Bit	 0000005C Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 000000A4 Para	  Public  'CODE'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 000000B0 Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -272,7 +284,7 @@ GetLocalTime . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 GetMaxXY . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 GetMseconds  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 GetNumberOfConsoleInputEvents  .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-GetNums  . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000030 Public STDCALL
+GetNums  . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000032 Public STDCALL
   nextNum  . . . . . . . . . . .	L Near	 00000018 _TEXT	
 GetProcessHeap . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 GetStdHandle . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -320,8 +332,10 @@ SetFilePointer . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 SetLocalTime . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetTextColor . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 ShowFPUStack . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-ShowNums . . . . . . . . . . . .	P Near	 00000030 _TEXT	Length= 0000002B Public STDCALL
-  nextNum2 . . . . . . . . . . .	L Near	 00000048 _TEXT	
+ShowNums . . . . . . . . . . . .	P Near	 00000032 _TEXT	Length= 00000035 Public STDCALL
+  a  . . . . . . . . . . . . . .	DWord	 bp + 00000008
+  b  . . . . . . . . . . . . . .	DWord	 bp + 0000000C
+  nextNum2 . . . . . . . . . . .	L Near	 0000004E _TEXT	
 Sleep  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 StrLength  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 Str_compare  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -348,8 +362,8 @@ WriteStackFrame  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 WriteString  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteToFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 0000005B _TEXT	Length= 00000049 Public STDCALL
-  done . . . . . . . . . . . . .	L Near	 00000098 _TEXT	
+main . . . . . . . . . . . . . .	P Near	 00000067 _TEXT	Length= 00000049 Public STDCALL
+  done . . . . . . . . . . . . .	L Near	 000000A4 _TEXT	
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 wsprintfA  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
